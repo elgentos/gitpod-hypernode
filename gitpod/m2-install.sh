@@ -6,9 +6,9 @@ url=$(gp url | awk -F"//" {'print $2'}) && url+="/" &&
 url="https://8002-"$url && 
 if [ "${INSTALL_MAGENTO}" = "YES" ]; then php bin/magento setup:install --db-name='magento' --db-user='app' --db-password=$pass --base-url=$url --backend-frontname='admin' --admin-user=$MAGENTO_ADMIN_USERNAME --admin-password=$MAGENTO_ADMIN_PASSWORD --admin-email=$GITPOD_GIT_USER_EMAIL --admin-firstname='Admin' --admin-lastname='User' --use-rewrites='1' --use-secure='1' --base-url-secure=$url --use-secure-admin='1' --language='en_US' --db-host='127.0.0.1' --cleanup-database --timezone='Europe/Amsterdam' --currency='EUR' --session-save='redis'; fi &&
 
-n98-magerun2 module:disable Magento_Csp &&
-n98-magerun2 module:disable Magento_TwoFactorAuth &&
-n98-magerun2 setup:upgrade &&
+magerun2 module:disable Magento_Csp &&
+magerun2 module:disable Magento_TwoFactorAuth &&
+magerun2 setup:upgrade &&
 
 yes | php bin/magento setup:config:set --session-save=redis --session-save-redis-host=127.0.0.1 --session-save-redis-log-level=3 --session-save-redis-db=0 --session-save-redis-port=6379;
 yes | php bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server=127.0.0.1 --cache-backend-redis-db=1;

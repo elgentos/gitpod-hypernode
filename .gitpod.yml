@@ -1,7 +1,7 @@
 image:
   file: .gitpod.Dockerfile
 ports:
-- port: 8002
+- port: 80
   visibility: public
   onOpen: open-preview
 - port: 9001

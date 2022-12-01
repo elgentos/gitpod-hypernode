@@ -20,7 +20,7 @@ github:
 tasks:
   - openMode: tab-after
     name: "Services"
-    init: sudo -i && su app && cd $GITPOD_REPO_ROOT && sudo chown -R app:app . &&
+    init: su app -m && cd $GITPOD_REPO_ROOT && sudo chown -R app:app . &&
           composer config -g -a http-basic.repo.magento.com ${MAGENTO_COMPOSER_AUTH_USER} ${MAGENTO_COMPOSER_AUTH_PASS} &&
           composer create-project --no-interaction --no-progress --repository-url=https://repo.magento.com/ magento/project-community-edition=${MAGENTO_VERSION} magento2 &&
           cd magento2 && cp -avr .* $GITPOD_REPO_ROOT;

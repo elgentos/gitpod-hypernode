@@ -1,0 +1,32 @@
+image:
+  file: .gitpod.Dockerfile
+ports:
+- port: 8002
+  visibility: public
+  onOpen: open-preview
+- port: 9001
+  onOpen: ignore
+- port: 15672
+  onOpen: ignore
+  visibility: public
+vscode:
+  extensions:
+    - TabNine.tabnine-vscode@3.4.14
+    - felixfbecker.php-debug@1.16.0
+github:
+  prebuilds:
+    master: true
+    branches: true
+tasks:
+  - openMode: tab-after
+    name: "Services"
+    init: cd $GITPOD_REPO_ROOT &&
+          composer config -g -a http-basic.repo.magento.com ${MAGENTO_COMPOSER_AUTH_USER} ${MAGENTO_COMPOSER_AUTH_PASS} &&
+          composer create-project --no-interaction --no-progress --repository-url=https://repo.magento.com/ magento/project-community-edition=${MAGENTO_VERSION} magento2 &&
+          cd magento2 && cp -avr .* $GITPOD_REPO_ROOT;
+          cd $GITPOD_REPO_ROOT && rm -r -f magento2 && git checkout -- .gitignore;
+    command: test ! -f $GITPOD_REPO_ROOT/gitpod/db-installed.flag && $GITPOD_REPO_ROOT/gitpod/m2-install.sh;
+             url=$(gp url | awk -F"//" {'print $2'}) && url="https://8002-"$url"/";
+             php bin/magento config:set web/unsecure/base_url $url;
+             php bin/magento config:set web/unsecure/base_link_url $url;
+             php bin/magento config:set web/secure/base_url $url;

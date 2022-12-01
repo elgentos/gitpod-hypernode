@@ -25,7 +25,7 @@ RUN php -v
 #RUN sed -i 's/PasswordAuthentication\ yes/PasswordAuthentication\ no/g' /etc/ssh/sshd_config
 
 # Enable passwordless sudo for app user (see https://github.com/ByteInternet/hypernode-docker/issues/6)
-#RUN echo "app     ALL = (ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN echo "app     ALL = (ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # Enable basic auth
 #RUN echo "elgentos:\$apr1\$w3qy86vS\$0bK4seHyfv8/0N38ie1NO0" > /data/web/htpasswd
